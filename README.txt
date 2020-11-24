@@ -39,3 +39,23 @@ Staging Area에 있던 변경내용이 commit history 공간에 기록된다.
 > git push -u origin(# 원격저장소 alias) main(branch 이름)
 ( * 최초로 remote repository에 연동할 때, 별칭을 origin으로 설정했었다. 
      > git remote add origin https://github.com/zoshs2/DT.git )
+     
+     
+## Remote Repo.를 Local Workplace에 반영하는 방법.
+만약 멀티유저 개발환경에서 누군가가 내가 마지막으로 보관해놨던 커밋이후로 신규커밋을 추가했다면, 
+나의 로컬 Workplace에 그 신규 커밋을 반영하는 방법은 무엇일까?
+기존에는 로컬 환경에서
+> git add . (local repo의 staging area에 올림)
+> git commit -m "blah blah" (local repo의 commit history에 기록함)
+> git push -u origin main (remote repo의 main branch로 반영시킴)
+와 같은 흐름을 통해 나만의 작업을 remote repo. 에 반영하는 작업만 수행했다.
+즉, 눈감고 귀닫고 내 일만 하는 것..ㅋ
+
+그래서 멀티유저끼리의 공동 개발환경에선 당연히 
+remote repo.에서 신규 커밋 및 변경사항을 
+내 local 작업공간에도 반영해야 할 필요가 생긴다.
+기본적인 흐름은 다음과 같다.
+> git fetch  ( remote repo.와 나만의 local workplace(또는 local repo.)를 서로 비교하면서, remote repo.로부터 상이한 변동사항을 끌어온다.
+> git merge origin/main ( git fetch 명령은 상이한 변동사항을 끌어올 뿐, 아직 반영하지 않은 상황인데, staging area에 머무는 index파일들과 유사한 상태이다.
+                          따라서, 이러한 변동사항을 이제 직접 반영시켜주기 위해서는 merge(병합)을 사용한다. origin/main은 HEAD(중심이 되는 브랜치포인터)의 목표를 가리킨다.
+                          브랜치(branch)는 후술하겠지만, 일종의 포인터 개념이다. HEAD라는 화살표를 특정 브랜치 포인터로 가리키며 작업을 수행하는 매커니즘이다. 자세한 내용은 나중에 더...)
